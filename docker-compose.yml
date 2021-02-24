@@ -11,8 +11,8 @@ services:
         source: ./elasticsearch/config/elasticsearch.yml
         target: /usr/share/elasticsearch/config/elasticsearch.yml
         read_only: true
-      - type: volume
-        source: elasticsearch
+      - type: bind
+        source: ./data/elasticsearch
         target: /usr/share/elasticsearch/data
     ports:
       - "9200:9200"
@@ -40,6 +40,9 @@ services:
         source: ./logstash/pipeline
         target: /usr/share/logstash/pipeline
         read_only: true
+      - type: bind
+        source: ./data/logstash
+        target: /var/lib/logstash
     ports:
       - "5044:5044"
       - "5000:5000/tcp"
@@ -62,6 +65,9 @@ services:
         source: ./kibana/config/kibana.yml
         target: /usr/share/kibana/config/kibana.yml
         read_only: true
+      - type: bind
+        source: ./data/kibana
+        target: /var/lib/kibana
     ports:
       - "5601:5601"
     networks:
